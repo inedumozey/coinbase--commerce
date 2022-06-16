@@ -1,0 +1,23 @@
+{
+  "name": "@mozeyinedu/coinbase",
+  "version": "0.1.0",
+  "description": "coinbase api for transactions using oauth authentication (accesstoken)",
+  "main": "test.js",
+  "scripts": {
+    "dev": "nodemon test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inedumozey/coinbase.git"
+  },
+  "bugs": {
+    "url": "https://github.com/inedumozey/coinbase.git"
+  },
+  "homepage": "https://github.com/inedumozey/coinbase.git",
+  "keywords": [],
+  "author": "mozey",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}

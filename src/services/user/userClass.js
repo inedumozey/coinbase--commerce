@@ -1,10 +1,16 @@
 const axios = require('axios')
 
 class UserClass {
-    constructor(accessToken, version, url){
+    constructor(accessToken, refreshToken, version, url){
         this.accessToken = accessToken
+        this.refreshToken = refreshToken
         this.version = version
         this.url = url
+    }
+
+    //generate new accessToken with the refreshToken when the accessToken expires
+    accessToken = function(){
+        
     }
 
     options = function(){

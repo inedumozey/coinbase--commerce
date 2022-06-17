@@ -1,14 +1,25 @@
 const axios = require('axios');
 const crypto = require('crypto');
+const fs = require('fs')
+const path = require('path')
 const getRandomString =()=>{
     return crypto.randomBytes(8).toString('hex')
 }
 
 class AccountClass {
-    constructor(accessToken, version, url){
-        this.accessToken = accessToken
+    constructor(access_token, version, url){
+        this.access_token = access_token
         this.version = version
         this.url = url
+    }
+
+    getAccessToken = function(){
+        const accessTokenLocation = path.join(process.env.PWD, '/src/lib/access.env')
+        //get accesstoken from accessTokenLocation if the accessTokenLocation exist otherwise, get from the user
+
+        const accessToken = fs.existsSync(accessTokenLocation) ? fs.readFileSync(accessTokenLocation, 'utf8') :  this.access_token;
+
+        return accessToken;
     }
 
     options = function(){

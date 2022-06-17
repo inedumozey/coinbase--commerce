@@ -1,5 +1,11 @@
 * coinbase
 
+** OAuth authentication
+
+
+
+
+
 ```
     const Coinbase = require('@mozeyinedu/coinbase');
     const coinbase = new Coinbase({accessToken})

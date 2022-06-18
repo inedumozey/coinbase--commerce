@@ -3,7 +3,24 @@
 ** OAuth authentication
 
 
+```
+    const utils = {
+        SECURE_RANDOM: ()=>crypto.randomBytes(8).toString('hex'),
+        CLIENT_ID: 'dc43672f0ccf25577de3b408fc14ae131742009c04c2496664cf3ac9ad9cf5de',
+        CLIENT_SECRET: '56f4f2c76a030033b5781eb816e84bb10a4d90b0d8217e87c08e86f3e734b0cc',
+        REDIRECT_URL: 'http://localhost:8000/coinbase/api/callback',
+        SCOPE: '"wallet:accounts:read wallet:transactions:request wallet:transactions:transfer wallet:transactions:read wallet:transactions:send"',
+        CODE: '979d5f156d69da86fb4363d7754e04c16f8cb74bf62d98327032534eba618df6',
+        REFRESH_TOKEN: '41ac625d21f07c5508a2266f95f694fdfe68c9a388187e8052c02d2fee73b7b9',
+        ACCESS_TOKEN: '9346872d4e29b76f27dc68eeb23621e4313c7ffbe07d929a2724b609b91cf16e',
+    }
 
+    const link = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=dc43672f0ccf25577de3b408fc14ae131742009c04c2496664cf3ac9ad9cf5de&redirect_uri=http://localhost:8000/coinbase/api/callback&state=ggdf63gd4i76xM&meta[send_limit_amount]=1&meta[send_limit_currency]=USD&meta[send_limit_period]=day&scope=wallet:accounts:read,wallet:transactions:request,wallet:transactions:transfer,wallet:transactions:read,wallet:transactions:send`
+
+
+
+const url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${utils.CLIENT_ID}&redirect_uri=${utils.REDIRECT_URL}&state=${utils.SECURE_RANDOM()}M&scope=${utils.SCOPE}`
+```
 
 
 ```

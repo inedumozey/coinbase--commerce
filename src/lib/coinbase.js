@@ -9,6 +9,7 @@ class Coinbase {
   constructor({access_token, refresh_token, client_secret, client_id, version="2022-06-10"}){
     this.user = (refresh_token && access_token && client_secret && client_id) ? new UserClass(access_token, version, url) : ''
     this.account = (refresh_token && access_token && client_secret && client_id) ? new AccountClass(access_token, version, url) : ''
+
     this.client_id = client_id,
     this.client_secret = client_secret
     this.refresh_token = refresh_token
@@ -16,7 +17,7 @@ class Coinbase {
   }
 
   // get the refresh token and save it to file system (ref.env)
-  generateToken = async function(refreshtoken){
+  generateTokens = async function(refreshtoken){
     const data = {
         grant_type: "refresh_token",
         client_id: "dc43672f0ccf25577de3b408fc14ae131742009c04c2496664cf3ac9ad9cf5de",
@@ -46,7 +47,7 @@ class Coinbase {
 
       const refreshtoken = await fs.existsSync(path.join(__dirname, '/refresh.env')) ? await fs.readFileSync(path.join(__dirname, '/refresh.env'), 'utf8') : this.refresh_token;
 
-      await this.generateToken(refreshtoken);
+      await this.generateTokens(refreshtoken);
      
     }
     catch(err){

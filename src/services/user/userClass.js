@@ -1,22 +1,25 @@
-const axios = require('axios')
+const axios = require('axios');
+const path = require('path')
+const fs = require('fs')
 
 class UserClass {
-    constructor(accessToken, refreshToken, version, url){
-        this.accessToken = accessToken
-        this.refreshToken = refreshToken
+    constructor(access_token, version, url){
+        this.access_token = access_token
         this.version = version
         this.url = url
     }
 
-    //generate new accessToken with the refreshToken when the accessToken expires
-    accessToken = function(){
-        
+    //get accesstoken
+    getAccesstoken = function(){
+        //get accesstoken
+        const accesstoken = fs.existsSync(path.join(process.env.PWD, 'src/lib/access.env')) ? fs.readFileSync(path.join(process.env.PWD, 'src/lib/access.env'), 'utf8') : this.access_token;
+        return accesstoken;
     }
 
     options = function(){
         return {
             headers: {
-                'Authorization': `Bearer ${this.accessToken}`,
+                'Authorization': `Bearer ${this.getAccesstoken()}`,
                 'CB-VERSION': this.version
             }
         }

@@ -2,6 +2,9 @@ const axios = require('axios');
 const crypto = require('crypto');
 const fs = require('fs')
 const path = require('path')
+require('dotenv').config()
+
+
 const getRandomString =()=>{
     return crypto.randomBytes(8).toString('hex')
 }
@@ -13,19 +16,17 @@ class AccountClass {
         this.url = url
     }
 
-    getAccessToken = function(){
-        const accessTokenLocation = path.join(process.env.PWD, '/src/lib/access.env')
-        //get accesstoken from accessTokenLocation if the accessTokenLocation exist otherwise, get from the user
-
-        const accessToken = fs.existsSync(accessTokenLocation) ? fs.readFileSync(accessTokenLocation, 'utf8') :  this.access_token;
-
-        return accessToken;
+    //get accesstoken
+    getAccesstoken = function(){
+        //get accesstoken
+        const accesstoken = fs.existsSync(path.join(process.env.PWD, 'src/lib/access.env')) ? fs.readFileSync(path.join(process.env.PWD, 'src/lib/access.env'), 'utf8') : this.access_token;
+        return accesstoken;
     }
 
     options = function(){
         return {
             headers: {
-                'Authorization': `Bearer ${this.accessToken}`,
+                'Authorization': `Bearer ${this.getAccesstoken()}`,
                 'CB-VERSION': this.version
             }
         }

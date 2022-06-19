@@ -1,30 +1,62 @@
 const Coinbase = require('./src/index');
-require('dotenv').config()
 
 const coinbase = new Coinbase({
-    access_token: '1e1c95d06200c9a9ced4695ac3e4d4e7c484c19cd7bcccd8d514358b215aa4a3',
-    refresh_token: '2475d521bc0cda7562975ef34c71983ef7dac236dc6114b2d3f2f1939c82d020',
-    client_secret: '56f4f2c76a030033b5781eb816e84bb10a4d90b0d8217e87c08e86f3e734b0cc',
-    client_id: 'dc43672f0ccf25577de3b408fc14ae131742009c04c2496664cf3ac9ad9cf5de',
+    env: 'dev',
+    client_id: '942023ff44c8f25416655f01b88ce8f2cd5b64b1c42508a0f194b039c3406a3e',
+    client_secret: 'da5b41a0bdd65cd45566be3d75bf7857e5bae8a70da997d427b235b6d3eb8319',
+    access_token: '556c239b4ec9e07a4d8fbd2c1ae2747be4399b96f187b8b29bc7c1dea69d4dba',
+    refresh_token: '',
 })
 
 
-async function run(){
+async function sendCoin({wallet_address, amount, currency, token}){
     try{
-        await coinbase.setTokens()
-        // const res1 = await coinbase.user.getCurrentUser()
-        const res = await coinbase.account.getAccount({account_id: '9532b23d-83e5-5e16-8833-fdc6f434d1ef'})
-        // for(let data of res.data.data){
-        //     if(data.balance.currency === 'LTC'){
-        //         console.log(data)
-        //     }
-        // }
-        console.log(res.data)
+        await coinbase.init()
+    
+        const res = await coinbase.account.getAccounts({limit: 10})
+        res.data.data.map(async data=>{
+            try{
+                
+                if(data.name.includes(currency)){
+                    console.log(data.balance)
+                    const ltc = await coinbase.account.send({account_id: data.id, wallet_address, amount, currency, token})
+    
+                    //send notifications
+                    const notif = await coinbase.account.getTransaction({account_id: data.id});
+                    
+                    const response =  {
+                        send: sendRes,
+                        notification: notif
+                    }
+
+                    console.log(response)
+                }
+            }
+            catch(err){
+                if(err.response){
+                    console.log(err.response.data)
+                }else{
+                    console.log(err.message)
+                }
+            }
+        })
+
+       
+
     }
     catch(err){
-        console.log(err)
+        if(err.response){
+            console.log(err.response.data)
+        }else{
+            console.log(err.message)
+        }
     }
 
 }
 
-run()
+sendCoin({
+    wallet_address: 'MEM129jAv4ffNo4pKyccNhiY92VPAJPLGT',
+    amount: '0.00025',
+    currency: 'LTC',
+    token: '6489122'
+})

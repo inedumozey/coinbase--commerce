@@ -3,19 +3,30 @@ const path = require('path')
 const fs = require('fs')
 
 class UserClass {
-    constructor(access_token, version, url){
+    constructor(access_token, version, url, env, environment){
         this.access_token = access_token
         this.version = version
         this.url = url
+        this.env = env
+        this.environment = environment
     }
 
     //get accesstoken
     getAccesstoken = function(){
-        //get accesstoken
-        const accesstoken = fs.existsSync(path.join(process.env.PWD, 'src/lib/access.env')) ? fs.readFileSync(path.join(process.env.PWD, 'src/lib/access.env'), 'utf8') : this.access_token;
-        return accesstoken;
+        //get accesstoken from user or access.env file if on production environment
+        if(this.env=="production" || this.env=="prod" || this.environment=="production" || this.environment=="prod"){
+            const accesstoken = fs.existsSync(path.join(process.env.PWD, '/access.env')) ? fs.readFileSync(path.join(process.env.PWD, '/access.env'), 'utf8') : this.access_token;
+
+            return accesstoken;
+        }
+        else{
+            // get accesstoken from user
+            return this.access_token;
+        }
     }
 
+
+    // set axios header
     options = function(){
         return {
             headers: {

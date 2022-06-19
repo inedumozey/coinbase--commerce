@@ -2,7 +2,6 @@ const axios = require('axios');
 const crypto = require('crypto');
 const fs = require('fs')
 const path = require('path')
-require('dotenv').config()
 
 
 const getRandomString =()=>{
@@ -10,19 +9,29 @@ const getRandomString =()=>{
 }
 
 class AccountClass {
-    constructor(access_token, version, url){
+    constructor(access_token, version, url, env, environment){
         this.access_token = access_token
         this.version = version
         this.url = url
+        this.env = env
+        this.environment = environment
     }
 
     //get accesstoken
     getAccesstoken = function(){
-        //get accesstoken
-        const accesstoken = fs.existsSync(path.join(process.env.PWD, 'src/lib/access.env')) ? fs.readFileSync(path.join(process.env.PWD, 'src/lib/access.env'), 'utf8') : this.access_token;
-        return accesstoken;
+        //get accesstoken from user or access.env file if on production environment
+        if(this.env=="production" || this.env=="prod" || this.environment=="production" || this.environment=="prod"){
+            const accesstoken = fs.existsSync(path.join(process.env.PWD, '/access.env')) ? fs.readFileSync(path.join(process.env.PWD, '/access.env'), 'utf8') : this.access_token;
+            return accesstoken;
+        }
+        else{
+
+            // get accesstoken from user
+            return this.access_token;
+        }
     }
 
+    // set axios header
     options = function(){
         return {
             headers: {
@@ -33,9 +42,9 @@ class AccountClass {
     }
    
     // get all accounts
-    getAccounts = async function(){
+    getAccounts = async function({limit}){
         try{
-            return await axios.get(`${this.url}/accounts`, this.options())
+            return await axios.get(`${this.url}/accounts/${limit ? `?limit=${limit}` : ''}`, this.options())
         }
         catch(err){
             throw err
@@ -49,21 +58,20 @@ class AccountClass {
             return await axios.get(`${this.url}/accounts/${account_id}`, this.options())
         }
         catch(err){
-            console.log(err.message)
+            throw err
         }
     }
 
     // get an account
-    getWalletAddresses = async function({account_id}){
+    getWalletAddresses = async function({account_id, limit}){
         try{
             if(!account_id) throw Error("account_id is missing!")
-            return await axios.get(`${this.url}/accounts/${account_id}/addresses`, this.options())
+            return await axios.get(`${this.url}/accounts/${account_id}/addresses${limit ? `?limit=${limit}` : ''}`, this.options())
         }
         catch(err){
-            console.log(err.message)
+            throw err
         }
     }
-
     
     // get an account
     getSelectedWalletAddress = async function({account_id, address_id}){
@@ -72,18 +80,18 @@ class AccountClass {
             return await axios.get(`${this.url}/accounts/${account_id}/addresses/${address_id}`, this.options())
         }
         catch(err){
-            console.log(err.message)
+            throw err
         }
     }
 
     // get all transactions
-    getTransactions = async function({account_id}){
+    getTransactions = async function({account_id, limit}){
         try{
             if(!account_id) throw Error("account_id is missing!")
-            return await axios.get(`${this.url}/accounts/${account_id}/transactions`, this.options())
+            return await axios.get(`${this.url}/accounts/${account_id}/transactions${limit ? `?limit=${limit}` : ''}`, this.options())
         }
         catch(err){
-            console.log(err.message)
+            throw err
         }
     }
 
@@ -95,7 +103,7 @@ class AccountClass {
             return await axios.get(`${this.url}/accounts/${account_id}/transactions/${transaction_id}`, this.options())
         }
         catch(err){
-            console.log(err.message)
+            throw err
         }
     }
 
@@ -139,25 +147,25 @@ class AccountClass {
 
             const option1 = {
                 headers: {
-                    'Authorization': `Bearer ${this.accessToken}`,
+                    'Authorization': `Bearer ${this.getAccesstoken()}`,
                     'CB-VERSION': this.version,
                 }
             }
 
             const option2 = {
                 headers: {
-                    'Authorization': `Bearer ${this.accessToken}`,
+                    'Authorization': `Bearer ${this.getAccesstoken()}`,
                     'CB-VERSION': this.version,
                     'CB-2FA-TOKEN': token
                 }
             }
 
             const option = token ? option2 : option1
-
-            return await axios.post(`${this.url}/accounts/${account_id}/transactions`, data, option)
+            
+            return await axios.post(`${this.url}/accounts/${account_id}/transactions`, data, option);
         }
         catch(err){
-            console.log(err.message)
+            throw err
         }
     }
 }

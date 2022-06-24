@@ -2,9 +2,9 @@
   "name": "@mozeyinedu/coinbase",
   "version": "0.1.0",
   "description": "coinbase api for transactions using oauth authentication (accesstoken)",
-  "main": "u.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon u.js"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,12 @@
   "dependencies": {
     "axios": "^0.27.2",
     "ccxt": "^1.87.95",
+    "coinbase-commerce-node": "^1.0.4",
     "cors": "^2.8.5",
-    "express": "^4.18.1"
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "morgan": "^1.10.0",
+    "rxjs": "^7.5.5"
   }
 }

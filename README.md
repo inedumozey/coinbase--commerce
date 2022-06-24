@@ -163,4 +163,25 @@ sendCoin({
     currency: 'LTC',
     token: '6489122'
 })
+
+
+const Coinbase = require('./src/index');
+const cors = require('cors');
+const ejs = require('ejs');
+const express = require('express');
+const app = express()
+
+app.use(cors())
+app.set('e')
+
+
+app.get('/', (req, res)=>{
+    res.send()
+})
+
+
+
+app.listen(5000, ()=>{
+    console.log('server conn at 5000')
+})
 ```

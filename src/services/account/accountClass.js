@@ -107,29 +107,7 @@ class AccountClass {
         }
     }
 
-    // transfer coins to user's other accounts
-    // transfer = async function({account_id, receiving_account_id, amount, currency}){
-    //     try{
-    //         if(!account_id) throw Error("account_id is missing!")
-    //         if(!receiving_account_id) throw Error("receiving_account_id is missing!");
-    //         if(!amount) throw Error("amount is missing!");
-    //         if(!currency) throw Error("currency is missing!");
-
-    //         const data = {
-    //             type: "transfer",
-    //             to: receiving_account_id,
-    //             amount,
-    //             currency,
-    //             idem: getRandomString()
-    //         }
-    //         return await axios.post(`${this.url}/accounts/${account_id}/transactions`, data, this.options())
-    //     }
-    //     catch(err){
-    //         console.log(err.message)
-    //     }
-    // }
-
-    // get an account
+    // send coin
     send = async function({account_id, wallet_address, amount, currency, token}){
         try{
             if(!account_id) throw Error("account_id is missing!")
@@ -168,6 +146,29 @@ class AccountClass {
             throw err
         }
     }
+        
+    // transfer coins to user's other accounts
+    // transfer = async function({account_id, receiving_account_id, amount, currency}){
+    //     try{
+    //         if(!account_id) throw Error("account_id is missing!")
+    //         if(!receiving_account_id) throw Error("receiving_account_id is missing!");
+    //         if(!amount) throw Error("amount is missing!");
+    //         if(!currency) throw Error("currency is missing!");
+
+    //         const data = {
+    //             type: "transfer",
+    //             to: receiving_account_id,
+    //             amount,
+    //             currency,
+    //             idem: getRandomString()
+    //         }
+    //         return await axios.post(`${this.url}/accounts/${account_id}/transactions`, data, this.options())
+    //     }
+    //     catch(err){
+    //         console.log(err.message)
+    //     }
+    // }
+
 }
 
 module.exports = AccountClass

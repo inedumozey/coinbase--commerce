@@ -1,15 +1,19 @@
 const axios = require("axios");
 const UserClass = require('../services/user/userClass');
+const ReceiveCass = require('../services/receive/receiveCass');
 const AccountClass = require('../services/account/accountClass')
 const url = "https://api.coinbase.com/v2";
 const fs = require('fs')
 const path = require('path')
 
 class Coinbase {
-  constructor({access_token, refresh_token, client_secret, client_id, version="2022-06-10", env, environment}){
+  constructor({access_token, refresh_token, client_secret, client_id, api_key, version="2022-06-10", e_version="2018-03-22", env, environment}){
+    
     this.user = access_token && client_secret &&client_id ? new UserClass(access_token, version, url, env, environment) : ''
     
-    this.account = access_token && client_secret &&client_id ? new AccountClass(access_token, version, url, env, environment) : ''   
+    this.account = access_token && client_secret &&client_id ? new AccountClass(access_token, version, url, env, environment) : ''
+    
+    this.receive = new ReceiveCass(api_key, e_version)
     
     this.version = version,
     this.client_id = client_id,

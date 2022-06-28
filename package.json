@@ -1,5 +1,5 @@
 {
-  "name": "@mozeyinedu/coinbase",
+  "name": "coinbasecommcere",
   "version": "0.1.0",
   "description": "coinbase api for transactions using oauth authentication (accesstoken)",
   "main": "index.js",
@@ -8,24 +8,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inedumozey/coinbase.git"
+    "url": "git+https://github.com/inedumozey/coinbaseCommcere.git"
   },
   "bugs": {
-    "url": "https://github.com/inedumozey/coinbase.git"
+    "url": "https://github.com/inedumozey/coinbaseCommcere.git"
   },
-  "homepage": "https://github.com/inedumozey/coinbase.git",
+  "homepage": "https://github.com/inedumozey/coinbaseCommcere.git",
   "keywords": [],
   "author": "mozey",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
-    "ccxt": "^1.87.95",
     "coinbase-commerce-node": "^1.0.4",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "ejs": "^3.1.8",
     "express": "^4.18.1",
-    "morgan": "^1.10.0",
-    "rxjs": "^7.5.5"
+    "morgan": "^1.10.0"
   }
 }
